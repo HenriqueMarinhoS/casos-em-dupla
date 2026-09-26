@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>O Rosto Emprestado</title>
+<link rel="stylesheet" href="motor.css">
+</head>
+<body>
+<div class="pag" id="app"></div>
+
+<script>
+/* ============ DADOS DO CASO ============
+   Solução: o Chanceler Hadrik, com uma dívida pessoal com a Casa Bancária de Tarn vencendo no Festival,
+   pegou um fio de cabelo de Liora, tirou um frasco da Poção do Rosto Emprestado do armário de Corvin (ele tem
+   cópia de todas as chaves), entrou no cofre com o rosto e a voz de Liora e jogou o frasco vazio no lixo do
+   laboratório de Corvin. Denúncias: no portão de ferro frio o disfarce tremulou (rosto velho de barba
+   cinzenta); no café, escondia a boca (lábios cor de amora) com "dor de dente".
+   Pistas que exigem as duas pastas: regras da poção (azul) x rosto que tremulou e boca escondida (verm);
+   barba grisalha de Hadrik e Corvin de cara raspada (azul) x barba cinzenta no portão (verm).
+   Pistas falsas: Corvin (frasco no lixo dele, mãos azuis de pó de lua) e Seraphine (mentiu: estava na taverna). */
+const CASO = {
+  id: "rosto",
+  titulo: "O Rosto Emprestado",
+  resumo: `<p>Vellmoor, a cidade-escola da <b>Academia das Sete Torres</b>. Há duzentos anos a cidade é protegida pela Muralha de Luz, alimentada pela <b>Lágrima de Estrela</b>, uma gema guardada no Cofre da Torre Norte. Sem ela, a Muralha se apaga na próxima lua nova.</p>
+<p>Na madrugada antes do Festival das Lanternas, a gema sumiu. O sentinela Brom viu a aprendiz <b>Liora</b> subir ao cofre à meia-noite e descer vinte minutos depois com uma trouxa. Liora jura que dormia no quarto dela. Está presa, e o Conselho a julga ao amanhecer.</p>
+<p>Vocês dois são os Inquiridores do Conselho. <b>Cada um recebeu uma pasta diferente, e nenhuma das duas resolve o caso sozinha.</b> Descubram quem entrou no cofre, como se denunciou, por que fez isso e quem mentiu sem ter culpa.</p>`,
+  titPessoas: "Quem está na Academia",
+  pessoas: [
+    ["Liora", "19 anos, aprendiz da Arquimaga Ondrea. Acusada do roubo."],
+    ["Arquimaga Ondrea", "Senhora da Academia. Viajou para a capital há três dias e volta amanhã."],
+    ["Chanceler Hadrik", "60 anos, cuida do tesouro e das chaves da Academia."],
+    ["Mestre Corvin", "50 anos, mestre de alquimia."],
+    ["Seraphine", "20 anos, aprendiz de Corvin. Queria ter sido a escolhida da Arquimaga."],
+    ["Brom", "58 anos, sentinela da Torre Norte, ex-soldado."],
+    ["Tessaly", "16 anos, criada do refeitório."]
+  ],
+  titLugar: "A Torre Norte",
+  lugar: `<p>O Cofre fica no alto da Torre Norte, no fim de uma escada em caracol. A porta do cofre não tem fechadura: <b>ela reconhece o rosto e a voz</b>, e só se abre para a Arquimaga Ondrea e para a aprendiz dela, Liora. Na base da torre, antes da escada, fica o <b>Portão de Ferro Frio</b>, muito antigo, que nunca se fecha. Ali o sentinela Brom monta guarda toda noite.</p>`,
+
+  pastas: {
+    azul: { nome: "Pasta Azul", jogador: "Detetive 1", desc: "o tratado de poções, a busca da guarda e os depoimentos da acusada, do alquimista e da aprendiz rival", docs: [
+      { t: "Depoimento de Liora", tipo: "acusada", c: `
+<p>"Dormi a noite inteira no meu quarto, com a porta trancada. Por que eu roubaria a Lágrima? Daqui a um ano eu seria maga, e a Muralha protege a minha família também.</p>
+<p>Três dias atrás, no refeitório, o Chanceler Hadrik tirou alguma coisa do meu ombro, alisou aquela <b>barba grisalha</b> dele e disse: <i>'Um fio de cabelo branco, tão moça?'</i> Guardou no lenço. Achei esquisito, mas ele é esquisito mesmo.</p>
+<p>A Seraphine me odeia desde que a Arquimaga me escolheu. Na semana passada, me chamou de ladra de mestre na frente de todo mundo."</p>` },
+      { t: "Tratado de Poções, página marcada", tipo: "livro", c: `
+<p><b>Poção do Rosto Emprestado.</b> Quem a bebe toma o rosto e a voz de outra pessoa, por <b>uma hora</b>. Exige, na mistura, <b>um fio de cabelo</b> da pessoa a ser copiada.</p>
+<p>Cuidados: perto de <b>ferro frio</b>, o disfarce tremula por um instante e deixa ver o rosto verdadeiro. Depois do efeito, e por um dia inteiro, os <b>lábios</b> de quem bebeu ficam da cor de amora madura, quase pretos.</p>` },
+      { t: "Depoimento de Mestre Corvin", tipo: "alquimista", c: `
+<p>"Sim, sei fazer a Poção do Rosto Emprestado. Guardo dois frascos dela no armário do meu laboratório. Hoje de manhã, <b>faltava um</b>.</p>
+<p>O laboratório tem uma chave; o armário tem outra. A do armário, só eu e o Chanceler Hadrik temos: ele guarda cópia de todas as chaves da Academia, por dever do cargo. Ontem à tarde a Seraphine me pediu a chave do laboratório para buscar pó de lua e a devolveu uma hora depois. A do armário ela nunca teve.</p>
+<p>Esta noite eu dormi sozinho. Não tenho quem confirme."</p>` },
+      { t: "Depoimento de Seraphine", tipo: "aprendiz rival", c: `
+<p>"Dormi a noite toda no dormitório das aprendizes. Não tenho nada a ver com isso.</p>
+<p>A Liora sempre quis mais do que merece; não me admira que tenha roubado. E se não foi ela, olhem para o meu mestre. O Mestre Corvin, de cara raspada e humor azedo, é o único na Academia que sabe fazer poção de disfarce."</p>` },
+      { t: "Busca da guarda", tipo: "relatório", c: `
+<p>Busca feita de manhã, por ordem do Conselho:</p>
+<table><tr><th>Local</th><th>Resultado</th></tr>
+<tr><td>Quarto de Liora</td><td>Nada encontrado.</td></tr>
+<tr><td>Laboratório de Mestre Corvin</td><td>No cesto de lixo, um <b>frasco vazio</b> com restos da Poção do Rosto Emprestado.</td></tr>
+<tr><td>Escritório do Chanceler</td><td>Registros de uma dívida pessoal do chanceler com a <b>Casa Bancária de Tarn</b>: 8.000 coroas, com vencimento no <b>dia do Festival das Lanternas</b>. Anotação do banco: "sem pagamento, prisão por dívida". A Guilda de Tarn tenta há anos comprar a Lágrima de Estrela.</td></tr></table>` }
+    ]},
+    verm: { nome: "Pasta Vermelha", jogador: "Detetive 2", desc: "depoimentos do sentinela, da criada, do chanceler e do taverneiro", docs: [
+      { t: "Depoimento de Brom", tipo: "sentinela", c: `
+<p>"À meia-noite em ponto, a menina Liora chegou e disse: <i>'Ordens da Arquimaga.'</i> Quando passou pelo Portão de Ferro Frio, por um piscar de olhos o rosto dela ficou <b>velho, de barba cinzenta</b>. Esfreguei os olhos e era a menina de novo. Achei que era a fumaça da tocha; já não tenho olhos de moço.</p>
+<p>Lá em cima a porta do cofre se abriu para ela, eu ouvi. Desceu vinte minutos depois com uma trouxa do tamanho de um pão. Na descida eu estava de costas, atiçando o braseiro, e não vi o rosto."</p>` },
+      { t: "Depoimento de Tessaly", tipo: "criada do refeitório", c: `
+<p>"No café da manhã, o Chanceler Hadrik chegou com um cachecol cobrindo a boca e o queixo. Disse que era <b>dor de dente</b>. Não comeu nada; tomou o caldo de costas para a mesa, sem tirar o cachecol.</p>
+<p>O Mestre Corvin comeu normal, de cara fechada como sempre, com as <b>mãos manchadas de azul</b> até o pulso. A Seraphine chegou atrasada, bocejando, com os sapatos cheios de lama."</p>` },
+      { t: "Depoimento do Chanceler Hadrik", tipo: "chanceler", c: `
+<p>"Fui dormir cedo, com uma dor de dente dos diabos. Não vi nada.</p>
+<p>O sentinela viu a Liora; o que mais querem? E se foi disfarce, só há um homem nesta Academia que sabe preparar a Poção do Rosto Emprestado: o Mestre Corvin. Eu olharia para ele."</p>` },
+      { t: "Depoimento do taverneiro das Três Corujas", tipo: "taverneiro", c: `
+<p>"A moça de cabelo ruivo, a Seraphine, aprendiz da Academia? Esteve aqui das dez da noite até as duas da manhã, dançando com um tocador de alaúde. Metade da cidade viu. Saiu pela estrada do rio, que à noite é só lama.</p>
+<p>A taverna fica do outro lado da cidade, a meia hora da Academia a pé."</p>` }
+    ]}
+  },
+
+  perguntas: [
+    { id:"quem", t:"Quem entrou no cofre à meia-noite?", certa:"hadrik", ops:[
+      ["liora","A própria Liora"],["hadrik","O Chanceler Hadrik, com o rosto de Liora"],
+      ["corvin","Mestre Corvin, com o rosto de Liora"],["seraphine","Seraphine, com o rosto de Liora"] ]},
+    { id:"sinais", t:"Quais sinais denunciam o disfarçado?", certa:"barba", ops:[
+      ["barba","O rosto de barba cinzenta que tremulou no Portão de Ferro Frio e a boca escondida no café da manhã"],
+      ["maos","As mãos manchadas de azul e o frasco vazio no lixo do laboratório"],
+      ["lama","A lama nos sapatos e o bocejo no café da manhã"],
+      ["trouxa","A trouxa do tamanho de um pão e a frase \"ordens da Arquimaga\""] ]},
+    { id:"porque", t:"Por quê?", certa:"divida", ops:[
+      ["divida","Para pagar uma dívida pessoal que vencia no Festival, vendendo a Lágrima a Tarn"],
+      ["rival","Para tirar Liora do caminho e ficar com o lugar dela"],
+      ["poder","Para provar ao Conselho que a Muralha de Luz não é necessária"],
+      ["vinganca","Por vingança contra a Arquimaga"] ]},
+    { id:"mentiu", t:"Quem mentiu, mas não teve nada a ver com o roubo?", certa:"seraphine", ops:[
+      ["seraphine","Seraphine"],["corvin","Mestre Corvin"],["brom","Brom, o sentinela"],["tessaly","Tessaly, a criada"] ]}
+  ],
+
+  solucao: `<p><b>O Chanceler Hadrik roubou a Lágrima de Estrela usando o rosto de Liora.</b></p>
+<p>Hadrik devia 8.000 coroas à Casa Bancária de Tarn, com vencimento no dia do Festival e prisão se não pagasse. A Guilda de Tarn queria a gema havia anos. Três dias antes, no refeitório, ele pegou um fio de cabelo de Liora. Como guarda cópia de todas as chaves, abriu o armário de Corvin e levou um frasco da Poção do Rosto Emprestado.</p>
+<p>À meia-noite, com o rosto e a voz de Liora, enganou a porta do cofre, que reconhece exatamente isso. Mas o disfarce tremula perto de ferro frio: ao passar pelo portão, Brom viu por um instante o rosto verdadeiro, velho e de barba cinzenta. Corvin tem a cara raspada. Depois, Hadrik jogou o frasco vazio no lixo do laboratório de Corvin, para culpá-lo. No dia seguinte, os lábios cor de amora o obrigaram a esconder a boca atrás do cachecol, com a desculpa da dor de dente.</p>`,
+  cadaUm: [
+    ["Seraphine", "Mentiu que dormiu no dormitório porque fugiu para dançar na taverna, do outro lado da cidade, das dez às duas. A lama era da estrada do rio."],
+    ["Mestre Corvin", "Sabia fazer a poção e o frasco estava no lixo dele, mas não tem barba, e as mãos azuis eram de pó de lua (a poção deixa azuis os lábios, não as mãos). Os lábios dele estavam normais no café."],
+    ["Liora", "Inocente. O fio de cabelo dela foi o ingrediente."],
+    ["Brom", "Contou exatamente o que viu. Achou que a barba era fumaça da tocha."]
+  ],
+  linha: [
+    ["3 dias", "A Arquimaga viaja. Hadrik tira um fio de cabelo do ombro de Liora."],
+    ["Tarde", "Seraphine pega e devolve a chave do laboratório (só do laboratório)."],
+    ["22h", "Seraphine chega à taverna das Três Corujas."],
+    ["~23h50", "Hadrik bebe a poção, que dura uma hora."],
+    ["00h00", "\"Liora\" passa pelo Portão de Ferro Frio; o rosto tremula. O cofre se abre."],
+    ["00h20", "Desce com a Lágrima numa trouxa."],
+    ["02h", "Seraphine sai da taverna pela estrada do rio."],
+    ["Manhã", "Frasco vazio no lixo de Corvin. Hadrik, de cachecol, com \"dor de dente\"."]
+  ]
+};
+</script>
+<script src="motor.js"></script>
+</body>
+</html>

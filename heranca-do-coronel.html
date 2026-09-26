@@ -5,72 +5,7 @@
 <meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>A Herança do Coronel</title>
-<style>
-:root{
-  --bg:#f3ede1; --papel:#fffaf0; --tinta:#2b2520; --suave:#6d6358; --linha:#d9cfbd;
-  --azul:#2f5d8a; --azul-f:#e6eef6; --verm:#9a3328; --verm-f:#f6e7e4;
-  --ok:#2e7d4f; --erro:#b23a2e; --destaque:#b8862b;
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#1c1a17; --papel:#262320; --tinta:#ece5d8; --suave:#a89e90; --linha:#3d3832;
-    --azul:#7fa9d4; --azul-f:#1f2b38; --verm:#e08a7e; --verm-f:#3a2522;
-    --ok:#6cc08e; --erro:#ef7f73; --destaque:#d9ad5b;
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#1c1a17; --papel:#262320; --tinta:#ece5d8; --suave:#a89e90; --linha:#3d3832;
-  --azul:#7fa9d4; --azul-f:#1f2b38; --verm:#e08a7e; --verm-f:#3a2522;
-  --ok:#6cc08e; --erro:#ef7f73; --destaque:#d9ad5b;
-}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--tinta);font:17px/1.6 Georgia,"Times New Roman",serif}
-.pag{max-width:760px;margin:0 auto;padding:24px 16px 64px}
-h1{font-size:2rem;margin:.2em 0 .1em;letter-spacing:.5px}
-h2{font-size:1.25rem;margin:1.6em 0 .5em}
-.sub{color:var(--suave);margin:0 0 1.2em;font-style:italic}
-.cartao{background:var(--papel);border:1px solid var(--linha);border-radius:8px;padding:16px 18px;margin:12px 0}
-.pessoas{margin:0;padding-left:1.1em}
-.pessoas li{margin:.25em 0}
-.botoes{display:grid;gap:12px;margin:18px 0}
-button{font:inherit;cursor:pointer;border-radius:8px;border:1px solid var(--linha);background:var(--papel);color:var(--tinta);padding:12px 16px;text-align:left}
-button:hover{border-color:var(--suave)}
-button.azul{border-left:6px solid var(--azul)}
-button.verm{border-left:6px solid var(--verm)}
-button.prim{background:var(--tinta);color:var(--papel);border-color:var(--tinta);text-align:center}
-button.link{background:none;border:none;color:var(--suave);text-decoration:underline;padding:4px 0;font-size:.9rem}
-button small{display:block;color:var(--suave);font-size:.85rem}
-button.prim small{color:inherit;opacity:.8}
-.faixa{display:inline-block;padding:2px 10px;border-radius:99px;font-size:.85rem;font-family:system-ui,sans-serif}
-.faixa.azul{background:var(--azul-f);color:var(--azul)}
-.faixa.verm{background:var(--verm-f);color:var(--verm)}
-.doc{border-left:4px solid var(--linha)}
-.doc.azul{border-left-color:var(--azul)}
-.doc.verm{border-left-color:var(--verm)}
-.doc summary{cursor:pointer;font-weight:bold;list-style:none}
-.doc summary::-webkit-details-marker{display:none}
-.doc summary::before{content:"▸ ";color:var(--suave)}
-.doc[open] summary::before{content:"▾ "}
-.doc .tipo{font-weight:normal;color:var(--suave);font-size:.85rem;font-family:system-ui,sans-serif;margin-left:6px}
-.doc p{margin:.7em 0}
-table{border-collapse:collapse;width:100%;font-size:.95rem;margin:.6em 0}
-th,td{border:1px solid var(--linha);padding:6px 8px;text-align:left}
-th{background:var(--bg)}
-textarea{width:100%;min-height:120px;font:inherit;font-size:.95rem;padding:10px;border-radius:8px;border:1px solid var(--linha);background:var(--papel);color:var(--tinta)}
-.perg{margin:18px 0}
-.perg label{display:block;padding:8px 10px;border:1px solid var(--linha);border-radius:6px;margin:6px 0;background:var(--papel);cursor:pointer}
-.perg label:hover{border-color:var(--suave)}
-.perg input{margin-right:8px}
-.aviso{background:var(--verm-f);border:1px solid var(--verm);color:var(--tinta);padding:10px 14px;border-radius:8px;font-size:.95rem}
-.nota{font-size:2.4rem;font-weight:bold;margin:.2em 0}
-.certo{color:var(--ok)} .errado{color:var(--erro)}
-.linha-tempo{list-style:none;padding:0;margin:0}
-.linha-tempo li{padding:6px 0 6px 76px;position:relative;border-bottom:1px dashed var(--linha)}
-.linha-tempo b{position:absolute;left:0;width:68px;color:var(--destaque);font-family:system-ui,sans-serif;font-size:.9rem;top:8px}
-.escondido{display:none}
-.topo{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
-@media (max-width:520px){ body{font-size:16px} h1{font-size:1.6rem} }
-</style>
+<link rel="stylesheet" href="motor.css">
 </head>
 <body>
 <div class="pag" id="app"></div>
@@ -78,6 +13,7 @@ textarea{width:100%;min-height:120px;font:inherit;font-size:.95rem;padding:10px;
 <script>
 /* ============ DADOS DO CASO ============ */
 const CASO = {
+  id: "heranca",
   titulo: "A Herança do Coronel",
   resumo: `<p>Domingo, 6h30. Benedita, a cozinheira da <b>Fazenda Boa Esperança</b>, no sul de Minas, subiu com o café e encontrou o <b>Coronel Aurélio Bastos</b>, 78 anos, morto na cama.</p>
 <p>Na véspera, no jantar de família, o Coronel anunciou que chamaria o tabelião na segunda-feira para mudar o testamento, "para corrigir uma injustiça". O médico da cidade desconfiou da morte e chamou a polícia.</p>
@@ -90,10 +26,12 @@ const CASO = {
     ["Genésio", "61 anos, capataz. Mora na casa do capataz, a 200 metros da sede."],
     ["Benedita", "64 anos, cozinheira. Encontrou o corpo."]
   ],
-  casa: `<p>Na casa-sede, a <b>copa</b> fica entre a cozinha e a <b>porta dos fundos</b>, que dá para o terreiro de terra vermelha e para o alpendre onde ficam as botinas e o tanque. A <b>varanda da frente</b> é coberta e ladrilhada; dela se chega à sala sem passar pela copa. Os quartos ficam no andar de cima.</p>`,
+  titPessoas: "Quem estava na fazenda naquela noite",
+  titLugar: "A casa",
+  lugar: `<p>Na casa-sede, a <b>copa</b> fica entre a cozinha e a <b>porta dos fundos</b>, que dá para o terreiro de terra vermelha e para o alpendre onde ficam as botinas e o tanque. A <b>varanda da frente</b> é coberta e ladrilhada; dela se chega à sala sem passar pela copa. Os quartos ficam no andar de cima.</p>`,
 
   pastas: {
-    azul: { nome: "Pasta Azul", jogador: "Detetive 1", docs: [
+    azul: { nome: "Pasta Azul", jogador: "Detetive 1", desc: "depoimentos da enfermeira, da cozinheira, do capataz e do filho", docs: [
       { t: "Depoimento de Zuleide", tipo: "enfermeira", c: `
 <p>"Todo dia, às 21h45, eu preparo o chá de camomila do Coronel. No sábado foi igual: deixei a xícara na bandeja, em cima do aparador da copa, e subi para dar os comprimidos da noite. Fiquei uns dez minutos no quarto com ele, até umas 21h55, ajeitando o travesseiro e medindo a pressão: 14 por 9.</p>
 <p>Desci, peguei a bandeja e levei o chá. Ele tomou tudo por volta das 22h. Lá pelas 23h reclamou de enjoo e disse que estava vendo tudo meio amarelado. Achei que era o jantar pesado e dei um chá de boldo. Me arrependo muito.</p>
@@ -124,7 +62,7 @@ const CASO = {
 <tr><td>Joaquim (peão; passou o fim de semana em Varginha)</td><td>41</td></tr></table>
 <p>Helena e Zuleide não constam da ficha.</p>` }
     ]},
-    verm: { nome: "Pasta Vermelha", jogador: "Detetive 2", docs: [
+    verm: { nome: "Pasta Vermelha", jogador: "Detetive 2", desc: "perícia, laudo e depoimentos do sobrinho e da filha", docs: [
       { t: "Laudo preliminar do legista", tipo: "perícia", c: `
 <p><b>Causa provável da morte:</b> intoxicação por digoxina, o remédio que o Coronel tomava para o coração, em dose muitas vezes maior que a receitada.</p>
 <p>Sintomas típicos: enjoo, confusão e visão amarelada. Pelo tempo de ação, a dose foi ingerida entre 21h30 e 22h30 de sábado.</p>
@@ -206,106 +144,7 @@ const CASO = {
   ]
 };
 
-/* ============ MOTOR ============ */
-const app = document.getElementById("app");
-const guardar = (k,v)=>{ try{ localStorage.setItem("heranca:"+k, v); }catch(e){} };
-const ler = k=>{ try{ return localStorage.getItem("heranca:"+k) || ""; }catch(e){ return ""; } };
-let papel = null;
-
-function cabecalho(){
-  return `<h1>${CASO.titulo}</h1><p class="sub">Um caso para dois detetives</p>`;
-}
-function blocoComum(){
-  return `<div class="cartao">${CASO.resumo}</div>
-<h2>Quem estava na fazenda naquela noite</h2>
-<div class="cartao"><ul class="pessoas">${CASO.pessoas.map(p=>`<li><b>${p[0]}</b>: ${p[1]}</li>`).join("")}</ul></div>
-<h2>A casa</h2><div class="cartao">${CASO.casa}</div>`;
-}
-
-function inicio(){
-  papel = null;
-  app.innerHTML = cabecalho() + `
-<div class="cartao">
-<p><b>Como se joga</b></p>
-<ul class="pessoas">
-<li>Cada um abre este arquivo no próprio aparelho e escolhe uma pasta: um fica com a <b>Azul</b>, o outro com a <b>Vermelha</b>.</li>
-<li>Não mostrem a tela um para o outro. Leiam em voz alta ou contem com as próprias palavras o que cada documento diz.</li>
-<li>Quando acharem que resolveram, combinem as respostas e entreguem o relatório, cada um na sua tela. Não há limite de tempo.</li>
-</ul></div>
-<div class="botoes">
-<button class="azul" onclick="abrir('azul')">Detetive 1: Pasta Azul<small>depoimentos da enfermeira, da cozinheira, do capataz e do filho</small></button>
-<button class="verm" onclick="abrir('verm')">Detetive 2: Pasta Vermelha<small>perícia, laudo e depoimentos do sobrinho e da filha</small></button>
-</div>
-<button class="link" onclick="abrir('ambas')">Ver as duas pastas (só para quem joga sozinho)</button>
-<p><a href="index.html" style="color:var(--suave)">Todos os casos</a></p>`;
-  scrollTo(0,0);
-}
-
-function docsHtml(chave){
-  const p = CASO.pastas[chave];
-  return p.docs.map(d=>`<details class="cartao doc ${chave}"><summary>${d.t}<span class="tipo">${d.tipo}</span></summary>${d.c}</details>`).join("");
-}
-
-function abrir(qual){
-  papel = qual;
-  let pastas = "";
-  if(qual==="ambas"){
-    pastas = `<h2><span class="faixa azul">Pasta Azul</span></h2>${docsHtml("azul")}<h2><span class="faixa verm">Pasta Vermelha</span></h2>${docsHtml("verm")}`;
-  } else {
-    const p = CASO.pastas[qual];
-    pastas = `<h2>Sua pasta <span class="faixa ${qual}">${p.nome}</span></h2>
-<p class="sub">Toque em cada documento para abrir. Seu parceiro tem outros documentos.</p>${docsHtml(qual)}`;
-  }
-  const rotulo = qual==="ambas" ? "Jogo solo" : CASO.pastas[qual].jogador;
-  app.innerHTML = `<div class="topo"><span class="faixa ${qual==="ambas"?"azul":qual}">${rotulo}</span><button class="link" onclick="inicio()">Trocar de pasta</button></div>`
-    + cabecalho() + blocoComum() + pastas + `
-<h2>Suas anotações</h2>
-<textarea id="notas" placeholder="Anote aqui o que o parceiro contar, horários, suspeitas...">${ler("notas-"+qual).replace(/</g,"&lt;")}</textarea>
-<div class="botoes"><button class="prim" onclick="relatorio()">Ir para o relatório final<small>só quando os dois tiverem combinado as respostas</small></button></div>`;
-  document.getElementById("notas").addEventListener("input", e=>guardar("notas-"+qual, e.target.value));
-  scrollTo(0,0);
-}
-
-function relatorio(){
-  const voltar = papel;
-  app.innerHTML = cabecalho() + `<h2>Relatório final</h2>
-<p class="aviso">Combinem as respostas antes de entregar. Depois da entrega, a solução aparece na tela.</p>
-${CASO.perguntas.map((q,i)=>`<div class="perg"><p><b>${i+1}. ${q.t}</b></p>${q.ops.map(o=>`<label><input type="radio" name="${q.id}" value="${o[0]}">${o[1]}</label>`).join("")}</div>`).join("")}
-<p id="falta" class="aviso escondido">Responda às quatro perguntas antes de entregar.</p>
-<div class="botoes"><button class="prim" onclick="entregar()">Entregar o relatório</button>
-<button class="link" onclick="abrir('${voltar}')">Voltar para a pasta</button></div>`;
-  scrollTo(0,0);
-}
-
-function entregar(){
-  const resp = {};
-  for(const q of CASO.perguntas){
-    const m = document.querySelector(`input[name="${q.id}"]:checked`);
-    if(!m){ document.getElementById("falta").classList.remove("escondido"); return; }
-    resp[q.id] = m.value;
-  }
-  let acertos = 0;
-  const itens = CASO.perguntas.map((q,i)=>{
-    const ok = resp[q.id]===q.certa; if(ok) acertos++;
-    const sua = q.ops.find(o=>o[0]===resp[q.id])[1];
-    const certa = q.ops.find(o=>o[0]===q.certa)[1];
-    return `<li><b>${q.t}</b><br><span class="${ok?"certo":"errado"}">${ok?"✔ Certo":"✘ Errado"}</span>: ${sua}${ok?"":`<br><i>Resposta certa:</i> ${certa}`}</li>`;
-  }).join("");
-  const nota = (acertos*2.5).toLocaleString("pt-BR",{minimumFractionDigits:1});
-  const frase = acertos===4 ? "Caso resolvido. O culpado vai responder pelo crime."
-    : acertos>=2 ? "Vocês chegaram perto, mas a defesa vai explorar as falhas do relatório."
-    : "O caso ficou em aberto. O culpado segue livre, por enquanto.";
-  app.innerHTML = cabecalho() + `
-<div class="cartao"><p style="margin:0">Nota da dupla</p><p class="nota">${nota} / 10</p><p>${frase}</p></div>
-<h2>Suas respostas</h2><div class="cartao"><ul class="pessoas">${itens}</ul></div>
-<h2>O que aconteceu</h2><div class="cartao">${CASO.solucao}</div>
-<h2>E os outros?</h2><div class="cartao"><ul class="pessoas">${CASO.cadaUm.map(c=>`<li><b>${c[0]}</b>: ${c[1]}</li>`).join("")}</ul></div>
-<h2>A noite, hora a hora</h2><div class="cartao"><ul class="linha-tempo">${CASO.linha.map(l=>`<li><b>${l[0]}</b>${l[1]}</li>`).join("")}</ul></div>
-<div class="botoes"><button onclick="inicio()">Voltar ao início</button></div>`;
-  scrollTo(0,0);
-}
-
-inicio();
 </script>
+<script src="motor.js"></script>
 </body>
 </html>

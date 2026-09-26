@@ -1,0 +1,88 @@
+/* Visual comum dos Casos em Dupla */
+:root{
+  --bg:#f3ede1; --papel:#fffaf0; --tinta:#2b2520; --suave:#6d6358; --linha:#d9cfbd;
+  --azul:#2f5d8a; --azul-f:#e6eef6; --verm:#9a3328; --verm-f:#f6e7e4;
+  --ok:#2e7d4f; --erro:#b23a2e; --destaque:#b8862b; --destaque-f:#f5ead3;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#1c1a17; --papel:#262320; --tinta:#ece5d8; --suave:#a89e90; --linha:#3d3832;
+    --azul:#7fa9d4; --azul-f:#1f2b38; --verm:#e08a7e; --verm-f:#3a2522;
+    --ok:#6cc08e; --erro:#ef7f73; --destaque:#d9ad5b; --destaque-f:#352c1c;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#1c1a17; --papel:#262320; --tinta:#ece5d8; --suave:#a89e90; --linha:#3d3832;
+  --azul:#7fa9d4; --azul-f:#1f2b38; --verm:#e08a7e; --verm-f:#3a2522;
+  --ok:#6cc08e; --erro:#ef7f73; --destaque:#d9ad5b; --destaque-f:#352c1c;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tinta);font:17px/1.6 Georgia,"Times New Roman",serif}
+.pag{max-width:760px;margin:0 auto;padding:24px 16px 64px}
+h1{font-size:2rem;margin:.2em 0 .1em;letter-spacing:.5px}
+h2{font-size:1.25rem;margin:1.6em 0 .5em}
+.sub{color:var(--suave);margin:0 0 1.2em;font-style:italic}
+.cartao{background:var(--papel);border:1px solid var(--linha);border-radius:8px;padding:16px 18px;margin:12px 0}
+.pessoas{margin:0;padding-left:1.1em}
+.pessoas li{margin:.25em 0}
+.botoes{display:grid;gap:12px;margin:18px 0}
+button{font:inherit;cursor:pointer;border-radius:8px;border:1px solid var(--linha);background:var(--papel);color:var(--tinta);padding:12px 16px;text-align:left}
+button:hover{border-color:var(--suave)}
+button:disabled{opacity:.5;cursor:default}
+button.azul{border-left:6px solid var(--azul)}
+button.verm{border-left:6px solid var(--verm)}
+button.prim{background:var(--tinta);color:var(--papel);border-color:var(--tinta);text-align:center}
+button.link{background:none;border:none;color:var(--suave);text-decoration:underline;padding:4px 0;font-size:.9rem}
+button small{display:block;color:var(--suave);font-size:.85rem}
+button.prim small{color:inherit;opacity:.8}
+.faixa{display:inline-block;padding:2px 10px;border-radius:99px;font-size:.85rem;font-family:system-ui,sans-serif}
+.faixa.azul{background:var(--azul-f);color:var(--azul)}
+.faixa.verm{background:var(--verm-f);color:var(--verm)}
+.doc{border-left:4px solid var(--linha)}
+.doc.azul{border-left-color:var(--azul)}
+.doc.verm{border-left-color:var(--verm)}
+.doc summary{cursor:pointer;font-weight:bold;list-style:none}
+.doc summary::-webkit-details-marker{display:none}
+.doc summary::before{content:"▸ ";color:var(--suave)}
+.doc[open] summary::before{content:"▾ "}
+.doc .tipo{font-weight:normal;color:var(--suave);font-size:.85rem;font-family:system-ui,sans-serif;margin-left:6px}
+.doc p{margin:.7em 0}
+.doc h3{margin:0;font-size:1.05rem}
+table{border-collapse:collapse;width:100%;font-size:.95rem;margin:.6em 0}
+th,td{border:1px solid var(--linha);padding:6px 8px;text-align:left}
+th{background:var(--bg)}
+textarea{width:100%;min-height:120px;font:inherit;font-size:.95rem;padding:10px;border-radius:8px;border:1px solid var(--linha);background:var(--papel);color:var(--tinta)}
+textarea.curta{min-height:80px}
+.contador{font-family:system-ui,sans-serif;font-size:.85rem;color:var(--suave);text-align:right;margin-top:4px}
+.perg{margin:18px 0}
+.perg label{display:block;padding:8px 10px;border:1px solid var(--linha);border-radius:6px;margin:6px 0;background:var(--papel);cursor:pointer}
+.perg label:hover{border-color:var(--suave)}
+.perg input{margin-right:8px}
+.aviso{background:var(--verm-f);border:1px solid var(--verm);color:var(--tinta);padding:10px 14px;border-radius:8px;font-size:.95rem}
+.dica{background:var(--destaque-f);border:1px solid var(--destaque);color:var(--tinta);padding:10px 14px;border-radius:8px;font-size:.95rem}
+.nota{font-size:2.4rem;font-weight:bold;margin:.2em 0}
+.certo{color:var(--ok)} .errado{color:var(--erro)}
+.linha-tempo{list-style:none;padding:0;margin:0}
+.linha-tempo li{padding:6px 0 6px 76px;position:relative;border-bottom:1px dashed var(--linha)}
+.linha-tempo b{position:absolute;left:0;width:68px;color:var(--destaque);font-family:system-ui,sans-serif;font-size:.9rem;top:8px}
+.escondido{display:none}
+.topo{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+
+/* escolha do nível */
+.niveis{display:grid;gap:10px;margin:10px 0}
+.niveis label{display:block;padding:10px 12px;border:1px solid var(--linha);border-radius:8px;background:var(--papel);cursor:pointer}
+.niveis label:hover{border-color:var(--suave)}
+.niveis label.marcado{border-color:var(--destaque);box-shadow:inset 4px 0 0 var(--destaque)}
+.niveis input{margin-right:8px}
+.niveis small{display:block;color:var(--suave);font-size:.88rem;margin-left:26px}
+.niveis .grau{font-family:system-ui,sans-serif;font-size:.8rem;color:var(--suave);margin-left:6px}
+
+/* relógio da leitura */
+.relogio{position:sticky;top:0;z-index:5;background:var(--tinta);color:var(--papel);border-radius:0 0 8px 8px;padding:8px 14px;margin:-24px 0 12px;font-family:system-ui,sans-serif;display:flex;justify-content:space-between;align-items:center}
+.relogio b{font-size:1.3rem;font-variant-numeric:tabular-nums}
+.relogio.fim{background:var(--erro);color:#fff}
+.consulta-docs{display:grid;gap:8px;margin-top:10px}
+.consulta-docs button{padding:8px 12px;font-size:.95rem}
+
+@media (max-width:520px){ body{font-size:16px} h1{font-size:1.6rem} }
+.doc.novidade{border-left-color:var(--destaque)}

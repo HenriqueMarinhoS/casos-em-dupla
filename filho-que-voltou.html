@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>O Filho que Voltou</title>
+<link rel="stylesheet" href="motor.css">
+</head>
+<body>
+<div class="pag" id="app"></div>
+
+<script>
+/* ============ DADOS DO CASO ============
+   Solução: o homem que voltou É o verdadeiro Joaquim. Dr. Augusto, que perderia a administração do engenho,
+   inventou que a queimadura do menino era na mão esquerda (o livro do médico prova que era a direita). A Bá
+   Rosa ia confirmar ao juiz que era ele. Durante os fogos, Augusto subiu "para buscar charutos", encontrou a
+   Bá no alto da escada dos fundos e a empurrou; ela arrancou um botão do paletó de linho azul (a novidade).
+   Pistas que exigem as duas pastas: "mão esquerda" (Augusto, azul) x livro do médico (verm); saída de Augusto
+   (juiz, verm) + escada ao lado do escritório (comum) + marcas nos braços (azul); botão de linho azul
+   (novidade, azul) + só Augusto de linho azul (Luísa, verm). Mentiroso de pista falsa: Severino (adega). */
+const CASO = {
+  id: "filho",
+  titulo: "O Filho que Voltou",
+  resumo: `<p>Engenho Santa Rita, Zona da Mata de Pernambuco, <b>noite de São João de 1898</b>. Há quinze anos, o menino <b>Joaquim</b>, então com 12 anos, sumiu no mar perto de Porto de Galinhas: acharam só o barquinho virado. Foi dado como morto.</p>
+<p>Há um mês, apareceu no engenho um homem de 27 anos dizendo ser Joaquim, salvo por um navio baleeiro americano e criado nos Estados Unidos. Pelo testamento do falecido Coronel, se Joaquim estiver vivo, <b>o engenho é dele</b>.</p>
+<p>Na manhã seguinte, o juiz ouviria a <b>Bá Rosa</b>, a velha babá que criou Joaquim, a única que dizia ter um jeito de provar quem ele era. Mas às 23h15, no meio dos fogos, a cozinheira a encontrou <b>morta ao pé da escada dos fundos</b>.</p>
+<p>Vocês foram mandados pelo chefe de polícia do Recife. <b>Cada um recebeu uma pasta diferente, e nenhuma das duas resolve o caso sozinha.</b> Descubram se o homem é mesmo Joaquim, quem matou a Bá Rosa e por quê.</p>`,
+  titPessoas: "Quem estava no engenho naquela noite",
+  pessoas: [
+    ["Dona Carlota", "68 anos, viúva do Coronel e mãe de Joaquim."],
+    ["\"Joaquim\"", "27 anos, o homem que voltou. Fala português com sotaque arrastado."],
+    ["Luísa", "40 anos, irmã de Joaquim."],
+    ["Dr. Augusto Meira", "45 anos, advogado, marido de Luísa. Administra o engenho desde a morte do Coronel."],
+    ["Severino", "50 anos, feitor do engenho."],
+    ["Benedita", "55 anos, cozinheira. Encontrou o corpo."],
+    ["Dr. Ferraz", "60 anos, juiz da comarca, convidado para o São João."]
+  ],
+  titLugar: "A casa-grande",
+  lugar: `<p>Na frente da casa-grande fica a <b>varanda</b>, de onde se vê o terreiro com a <b>fogueira</b>. A escada principal, na sala, sobe para os quartos e para o <b>escritório</b>. No fim do corredor de cima, ao lado do escritório, fica o quartinho da Bá Rosa, no alto da <b>escada dos fundos</b>, que desce para o quintal da cozinha. A <b>adega</b> fica no porão, com entrada pelo lado da moenda, longe da cozinha. Às 22h45 começaram os fogos grandes, e quase todos foram para o terreiro assistir.</p>`,
+
+  pastas: {
+    azul: { nome: "Pasta Azul", jogador: "Detetive 1", desc: "o testamento, o exame do corpo e os depoimentos da mãe, do cunhado e do feitor", docs: [
+      { t: "Testamento do Coronel", tipo: "documento", c: `
+<p>Trecho do testamento, aberto em 1890:</p>
+<p><i>"Deixo o Engenho Santa Rita ao meu filho Joaquim, se vivo for. Na falta dele, à minha filha Luísa, e enquanto ela viver, a administração caberá ao seu marido."</i></p>` },
+      { t: "Depoimento de Dona Carlota", tipo: "mãe", c: `
+<p>"É o meu filho. Sabia o nome do barquinho, <i>Andorinha</i>, e me chamou de 'Mãe Lota', como só ele chamava. Não lembra o nome do cachorro nem fala direito a nossa língua, mas foram quinze anos entre estrangeiros.</p>
+<p>O que me tirou o sono foi o Augusto. Ele jura que o menino queimou a <b>mão esquerda</b> no tacho de melado, e este homem tem a cicatriz na <b>direita</b>. Eu não lembro qual mão foi. Naquele dia eu desmaiei quando vi a queimadura.</p>
+<p>Na noite de São João, das dez e meia até as onze e meia, ele marcou a quadrilha sem parar na frente da fogueira, em francês errado, e todo mundo riu. A Luísa passou a noite sentada com as senhoras, perto do fogo, de cara amarrada."</p>` },
+      { t: "Depoimento do Dr. Augusto Meira", tipo: "cunhado", c: `
+<p>"Esse homem é um aventureiro que ouviu histórias da família em algum porto. Eu morava aqui quando o Joaquim se queimou e vi com meus olhos: foi a <b>mão esquerda</b>. A cicatriz dele está na mão errada.</p>
+<p>Na noite de São João, fiquei na varanda com o Dr. Ferraz. Quando começaram os fogos grandes, subi ao escritório para buscar charutos, mas não achei a caixa e voltei. Coisa de poucos minutos.</p>
+<p>A Bá Rosa? Coitada, andava bebendo e escorregou naquela escada, que é um perigo. Na véspera ela me disse que ia 'acabar com essa farsa'. Se alguém queria calar a velha, era o sujeito que ela ia desmascarar."</p>` },
+      { t: "Depoimento de Severino", tipo: "feitor", c: `
+<p>"Fiquei na fogueira a noite toda, soltando os fogos com os meninos do engenho. Não arredei o pé.</p>
+<p>Na ceia, a Bá Rosa falou alto para quem quisesse ouvir: <i>'Amanhã eu conto ao juiz o que só eu e o menino sabemos, e acaba essa conversa.'</i> Para mim, ela ia desmascarar esse sujeito. Um homem que não sabe o nome do próprio cachorro!"</p>` },
+      { t: "Exame do corpo", tipo: "médico", c: `
+<p>Exame feito pelo médico da vila na mesma noite.</p>
+<p>A Bá Rosa caiu do alto da escada dos fundos e morreu na queda. Morte entre <b>22h40</b> (quando foi vista viva pela última vez) e <b>23h15</b> (quando foi encontrada).</p>
+<p>Nos dois braços, logo abaixo dos ombros, há <b>marcas roxas de dedos</b>, de quem a agarrou com força pouco antes da queda. Não há cheiro de bebida.</p>` }
+    ]},
+    verm: { nome: "Pasta Vermelha", jogador: "Detetive 2", desc: "o livro do médico antigo e os depoimentos do homem que voltou, do juiz, da irmã e da cozinheira", docs: [
+      { t: "Depoimento do homem que voltou", tipo: "\"Joaquim\"", c: `
+<p>"O baleeiro <i>Nantucket Rose</i> me pescou do mar em 1883. Cresci em New Bedford. Esqueci muito da língua, mas não esqueci minha mãe, nem o <i>Andorinha</i>, nem o tacho de melado: foi com a <b>mão direita</b>, roubando melado quente escondido. Doeu por semanas.</p>
+<p>A Bá Rosa me reconheceu no primeiro dia. Pediu para ver a minha mão direita e beijou a cicatriz, chorando. Depois me pediu segredo até falar com o juiz. Estava com medo. Disse: <i>'Cuidado com quem mais perde com a tua volta.'</i>"</p>` },
+      { t: "Livro de atendimentos do Dr. Tavares", tipo: "médico, 1882", c: `
+<p>Livro do antigo médico da vila, falecido há cinco anos, encontrado na botica.</p>
+<table><tr><th>Data</th><th>Paciente</th><th>Registro</th></tr>
+<tr><td>12 de agosto de 1882</td><td>Joaquim, 11 anos, filho do Coronel do Engenho Santa Rita</td><td>Queimadura de segundo grau na <b>palma da mão direita</b>, por melado quente de tacho. Curativo com clara de ovo e óleo.</td></tr></table>` },
+      { t: "Depoimento do Dr. Ferraz", tipo: "juiz", c: `
+<p>"Passei a noite na varanda, com o Dr. Augusto. Às 22h45, quando começaram os fogos grandes, ele pediu licença para buscar charutos no escritório. Voltou às 23h10, afogueado e sem os charutos. Disse que não achou a caixa. Notei que o paletó dele estava abotoado torto.</p>
+<p>A Bá Rosa tinha pedido para falar comigo em particular, logo cedo, antes de todos. Não disse o assunto."</p>` },
+      { t: "Depoimento de Luísa", tipo: "irmã", c: `
+<p>"Esse homem quer nos tomar tudo. Meu irmão morreu no mar há quinze anos, e minha mãe, na idade dela, acredita no que quer.</p>
+<p>No São João do engenho, todos se vestem de algodão branco; é tradição da casa. Só o Augusto, vaidoso, estreou o <b>paletó de linho azul</b> com botões de chifre que eu mandei fazer no Recife. Eu fiquei a noite toda sentada com as senhoras, perto da fogueira."</p>` },
+      { t: "Depoimento de Benedita", tipo: "cozinheira", c: `
+<p>"Às 22h40 a Bá Rosa subiu a escada dos fundos para o quartinho dela. Estava sóbria, ela não bebia fazia anos. Às 22h45 eu fui para o terreiro ver os fogos, como todo mundo.</p>
+<p>Às 22h50, do terreiro, vi o Severino saindo da adega, do lado da moenda, com duas garrafas do vinho do Porto do finado Coronel escondidas debaixo da camisa. Ele voltou para a fogueira como se nada fosse.</p>
+<p>Às 23h15 voltei para a cozinha e achei a Bá caída ao pé da escada."</p>` }
+    ]}
+  },
+
+  reviravolta: {
+    para: "azul",
+    aviso: "Ao levantarem o corpo da Bá Rosa para o velório, acharam uma coisa debaixo dela.",
+    t: "Achado debaixo do corpo", tipo: "perícia", c: `
+<p>Um <b>botão de chifre</b>, arrancado com força: ainda tem presa na linha uma tira de tecido de <b>linho azul</b>.</p>` },
+
+  perguntas: [
+    { id:"quem-e", t:"O homem que voltou é mesmo Joaquim?", certa:"sim", ops:[
+      ["sim","Sim, é o verdadeiro Joaquim"],
+      ["impostor","Não: é um impostor que decorou a história da família"],
+      ["marinheiro","Não: é um marinheiro do baleeiro que conheceu o verdadeiro Joaquim"] ]},
+    { id:"quem", t:"Quem matou a Bá Rosa?", certa:"augusto", ops:[
+      ["augusto","Dr. Augusto, o cunhado"],["joaquim","O homem que voltou"],["severino","Severino, o feitor"],
+      ["luisa","Luísa, a irmã"],["carlota","Dona Carlota"],["acidente","Ninguém: ela escorregou"] ]},
+    { id:"porque", t:"Por que ela foi morta?", certa:"confirmar", ops:[
+      ["confirmar","Ia provar ao juiz que o homem era Joaquim, e o engenho sairia das mãos de Augusto e Luísa"],
+      ["desmascarar","Ia desmascarar o impostor diante do juiz"],
+      ["adega","Viu o furto do vinho do Porto na adega"],
+      ["bebida","Não houve motivo: foi uma queda de quem tinha bebido"] ]},
+    { id:"mentira", t:"Qual \"prova\" contra o homem que voltou era mentira?", certa:"mao", ops:[
+      ["mao","A de que o menino tinha queimado a mão esquerda"],
+      ["sotaque","A de que ele fala português com sotaque"],
+      ["cachorro","A de que ele não lembra o nome do cachorro"],
+      ["nenhuma","Nenhuma: todas as provas contra ele eram verdadeiras"] ]}
+  ],
+
+  solucao: `<p><b>O homem que voltou é o verdadeiro Joaquim, e o Dr. Augusto matou a Bá Rosa.</b></p>
+<p>Se Joaquim estivesse vivo, o engenho seria dele, e Augusto perderia a administração que exercia desde a morte do Coronel. Para desacreditar o cunhado, Augusto inventou que a queimadura de infância tinha sido na mão esquerda. O livro do Dr. Tavares, de 1882, mostra que foi na palma da mão direita, exatamente onde está a cicatriz.</p>
+<p>A Bá Rosa tinha reconhecido o menino pela cicatriz e ia contar isso ao juiz. Às 22h45, com todos olhando os fogos, Augusto deixou a varanda "para buscar charutos". No corredor de cima, ao lado do escritório, encontrou a Bá no alto da escada dos fundos, agarrou-a pelos braços e a empurrou. Na luta, ela arrancou um botão do paletó de linho azul, o único da festa. Ele voltou às 23h10, afogueado e com o paletó abotoado torto.</p>`,
+  cadaUm: [
+    ["Severino", "Mentiu ao dizer que não saiu da fogueira: foi furtar vinho do Porto na adega, do outro lado da casa. Achava mesmo que a Bá ia desmascarar o homem, porque entendeu errado o que ela disse na ceia."],
+    ["Luísa", "Perderia o engenho, mas passou a noite com as senhoras junto à fogueira. Foi ela quem contou do paletó azul."],
+    ["O homem que voltou", "Marcava a quadrilha na frente de todos na hora da morte."],
+    ["Dona Carlota", "Estava na quadrilha. Não lembrava qual mão, e Augusto se aproveitou disso."]
+  ],
+  linha: [
+    ["1882", "Joaquim, 11 anos, queima a palma da mão direita no tacho de melado."],
+    ["1883", "O barquinho Andorinha vira; Joaquim é recolhido por um baleeiro."],
+    ["Maio 1898", "Joaquim volta. A Bá Rosa o reconhece pela cicatriz e pede segredo."],
+    ["Ceia", "A Bá anuncia que amanhã conta ao juiz o que só ela e o menino sabem."],
+    ["22h30", "Joaquim começa a marcar a quadrilha, até as 23h30."],
+    ["22h40", "A Bá sobe a escada dos fundos."],
+    ["22h45", "Fogos grandes. Augusto deixa a varanda."],
+    ["22h50", "Severino sai da adega com o vinho do Porto."],
+    ["23h10", "Augusto volta, afogueado, com o paletó abotoado torto."],
+    ["23h15", "Benedita encontra o corpo."]
+  ]
+};
+</script>
+<script src="motor.js"></script>
+</body>
+</html>

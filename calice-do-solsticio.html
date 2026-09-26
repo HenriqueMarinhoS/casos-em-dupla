@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>O Cálice do Solstício</title>
+<link rel="stylesheet" href="motor.css">
+</head>
+<body>
+<div class="pag" id="app"></div>
+
+<script>
+/* ============ DADOS DO CASO ============
+   Solução: Sir Rowan passou pasta de cinzalume no cálice de estanho do senescal às 15h, contando com a
+   Troca dos Cálices do Solstício (o duque bebe do cálice do servo mais antigo). O alvo era o DUQUE: a
+   duquesa está grávida e, pelo Foral, filho que nasce depois da morte do senhor não herda. Às 16h o duque
+   brigou com Bertram e cancelou a Troca; Bertram bebeu do próprio cálice e morreu.
+   Pistas que exigem as duas pastas: capa verde (Livro do Portão, azul) + homem de capa verde na mesa (Marta,
+   verm); costume da Troca (capelão, verm) + "este ano não há troca" e a briga das 16h (azul); gravidez
+   (novidade, azul) + Foral (verm). Mentirosos: Rowan (chegada) e Gavron (soldo, pista falsa). */
+const CASO = {
+  id: "calice",
+  titulo: "O Cálice do Solstício",
+  resumo: `<p>Noite do Solstício de Inverno na <b>Fortaleza de Corvalta</b>, no Ducado de Brumaval. No grande salão, o <b>Duque Aldric</b> ergueu o cálice para o brinde, e toda a mesa alta bebeu. Minutos depois, o velho <b>senescal Bertram</b>, trinta anos a serviço do duque, levou a mão ao peito e caiu. Os lábios dele tinham ficado <b>prateados</b>: sinal de <b>cinzalume</b>, a pasta venenosa da flor-de-cinza.</p>
+<p>O duque mandou chamar vocês dois, Inquiridores da Coroa. <b>Cada um recebeu uma pasta diferente, e nenhuma das duas resolve o caso sozinha.</b> Descubram quem envenenou o cálice, quem essa pessoa queria matar, por que o plano saiu como saiu e qual era o motivo.</p>`,
+  titPessoas: "Quem estava na fortaleza",
+  pessoas: [
+    ["Duque Aldric de Corvalta", "58 anos, senhor da fortaleza. Não tem filhos."],
+    ["Duquesa Isolena", "29 anos, segunda esposa do duque. Casou-se com ele no último outono."],
+    ["Sir Rowan de Corvalta", "31 anos, sobrinho do duque e herdeiro do ducado. Foi criado na fortaleza desde menino."],
+    ["Sir Gavron", "44 anos, capitão da guarda."],
+    ["Mestra Ilsa", "61 anos, herbolária da fortaleza."],
+    ["Irmão Caedmon", "55 anos, capelão."],
+    ["Tobin", "17 anos, copeiro. É o primeiro inverno dele em Corvalta."],
+    ["Marta", "40 anos, criada do salão."]
+  ],
+  titLugar: "A fortaleza",
+  lugar: `<p>No <b>grande salão</b>, a <b>mesa alta</b> fica sobre um estrado. Além da porta principal, há uma <b>porta lateral, sem tranca</b>, que dá para o pátio. Na mesa alta, a louça é de <b>prata-lunar</b>, que escurece na hora ao tocar qualquer veneno; é assim há gerações, por medo de envenenamento dos senhores. A fortaleza tem <b>um único portão</b>, e o sargento de guarda anota no Livro do Portão quem entra e quem sai.</p>`,
+
+  pastas: {
+    azul: { nome: "Pasta Azul", jogador: "Detetive 1", desc: "depoimentos do copeiro, da duquesa, do capitão, da herbolária e o Livro do Portão", docs: [
+      { t: "Depoimento de Tobin", tipo: "copeiro", c: `
+<p>"Ao meio-dia arrumei a mesa alta, com os cálices emborcados. Todos de prata-lunar, menos um: o do senescal, de <b>estanho</b> velho, que ele diz ter sido do pai. O lugar dele é à direita do duque. Depois fui para a cozinha e só voltei ao salão com o banquete, às oito.</p>
+<p>No brinde, enchi todos os cálices da mesa alta com o mesmo jarro de vinho quente. O duque levantou o dele e disse: <i>'Este ano não há troca, Bertram. Cada um bebe do seu.'</i> Uns riram, outros ficaram quietos. Eu não entendi; é meu primeiro inverno aqui.</p>
+<p>O senescal bebeu, ficou branco, os lábios prateados, e caiu. Todos da mesa alta beberam do mesmo jarro, e ninguém mais passou mal."</p>` },
+      { t: "Depoimento da Duquesa Isolena", tipo: "duquesa", c: `
+<p>"Às quatro da tarde, no solar, o senescal e meu marido brigaram feio. Bertram trouxe as contas da guarda e disse que Sir Gavron roubava o soldo dos soldados. Meu marido defendeu Gavron e gritou: <i>'Pois este ano não bebo do teu cálice, velho!'</i> Não entendi o que ele quis dizer; este é o meu primeiro Solstício em Corvalta.</p>
+<p>Depois disso passei a tarde nos meus aposentos, com a minha criada, e só desci para o banquete."</p>` },
+      { t: "Depoimento de Sir Gavron", tipo: "capitão da guarda", c: `
+<p>"As contas do velho eram calúnia. Nunca toquei num tostão do soldo dos meus homens, e o duque sabe disso: ele mesmo me defendeu.</p>
+<p>Passei a tarde toda no posto do portão, até a hora do banquete. Se querem um culpado, procurem direito: o Bertram tinha mais inimigos do que dentes."</p>` },
+      { t: "Depoimento de Mestra Ilsa", tipo: "herbolária", c: `
+<p>"Cinzalume, não tenho dúvida: os lábios prateados não enganam. Eu guardo um pote dessa pasta na botica, para os ratos do celeiro. Depois da morte fui olhar: <b>o pote sumiu</b>.</p>
+<p>Quem entrou na minha botica nos últimos dias? Há sete dias veio <b>Sir Rowan</b>, pedindo alguma coisa para dormir. Fui buscar a erva no porão e o deixei sozinho uns minutos.</p>
+<p>No dia do Solstício passei o dia inteiro na aldeia, ajudando num parto difícil. Voltei no fim da tarde."</p>` },
+      { t: "Livro do Portão", tipo: "registro", c: `
+<p>Anotações do sargento de guarda no dia do Solstício.</p>
+<table><tr><th>Hora</th><th>Registro</th></tr>
+<tr><td>Meio-dia</td><td>Entra Sir Rowan de Corvalta, sozinho, a cavalo, de <b>capa verde</b>.</td></tr>
+<tr><td>Cinco da tarde</td><td>Entra Mestra Ilsa, voltando da aldeia.</td></tr>
+<tr><td>Seis da tarde</td><td>Entram os convidados de Vale Fundo: doze pessoas, a cavalo.</td></tr></table>
+<p>Nota do sargento: <i>"O capitão Gavron esteve no posto do portão do meio-dia até a hora do banquete, sem se ausentar. Ninguém mais entrou ou saiu."</i></p>` }
+    ]},
+    verm: { nome: "Pasta Vermelha", jogador: "Detetive 2", desc: "depoimentos do capelão, do sobrinho e da criada, o exame do físico, as contas da guarda e o Foral", docs: [
+      { t: "Depoimento do Irmão Caedmon", tipo: "capelão", c: `
+<p>"No Solstício, os senhores de Corvalta fazem a <b>Troca dos Cálices</b>: no brinde, o senhor dá o seu cálice de prata ao servo mais antigo da casa e <b>bebe do cálice desse servo</b>, em sinal de que quem manda também serve. É costume da família, feito só na mesa alta; gente de fora nem sabe que existe.</p>
+<p>Há trinta anos o duque bebe, nesta noite, do cálice de estanho do Bertram. Quem foi criado nesta casa conhece o costume de cor. Este ano não houve troca. Não sei por quê."</p>` },
+      { t: "Depoimento de Sir Rowan", tipo: "sobrinho e herdeiro", c: `
+<p>"Cheguei ao anoitecer, junto com os convidados de Vale Fundo, e fui direto para o salão. Amo meu tio como a um pai; foi ele quem me criou.</p>
+<p>Querem saber quem desejava a morte do Bertram? O velho ia denunciar o Gavron por roubo. Um capitão desonrado perde tudo. Façam as contas."</p>` },
+      { t: "Exame de Mestre Oswin", tipo: "físico da corte", c: `
+<p>Morte por cinzalume, que mata em poucos minutos quando bebido.</p>
+<p>No fundo do cálice de estanho do senescal havia resto de pasta seca, passada <b>horas antes do banquete</b> e dissolvida pelo vinho quente. No estanho escuro, a pasta seca não se vê. O jarro estava limpo. Todos os cálices de prata-lunar continuavam brilhantes, sem nenhuma mancha.</p>
+<p>Observação do físico: <i>"Quem quisesse envenenar alguém na mesa alta não podia usar a prata-lunar: ela escurece na hora, e o copeiro veria. O único cálice cego ao veneno era o de estanho."</i></p>` },
+      { t: "Depoimento de Marta", tipo: "criada do salão", c: `
+<p>"O salão ficou vazio do meio-dia até as três. Às três, entrei para enfeitar com azevinho e vi um homem de capuz, curvado sobre os cálices da mesa alta. <b>Capa verde</b>. Quando me viu, saiu depressa pela porta lateral. Achei que era um convidado adiantado, curioso com a louça.</p>
+<p>Das três até o banquete, fiquei no salão com as outras criadas, e ninguém mais chegou perto da mesa alta."</p>` },
+      { t: "Livro do soldo da guarda", tipo: "contas", c: `
+<p>Registro dos pagamentos aos soldados da fortaleza, conferido pelo senescal Bertram.</p>
+<p>Nos últimos três meses, faltam <b>40 coroas</b> entre o que saiu do tesouro e o que os soldados receberam. Todos os recibos de retirada estão assinados por <b>Sir Gavron</b>.</p>` },
+      { t: "Foral de Brumaval", tipo: "lei do ducado", c: `
+<p>Trecho da lei que rege as heranças do ducado:</p>
+<p><i>"O filho do senhor herda antes de qualquer sobrinho. Se o senhor morrer sem filho nascido, herda o parente homem mais próximo. <b>O filho que nascer depois da morte do senhor nada herda.</b>"</i></p>` }
+    ]}
+  },
+
+  reviravolta: {
+    para: "azul",
+    aviso: "A Duquesa Isolena mandou chamar vocês com urgência.",
+    t: "A Duquesa pede para falar", tipo: "novo depoimento", c: `
+<p>"Não contei antes porque tive medo. <b>Estou esperando um filho do duque</b>, de três meses. Só a Mestra Ilsa e meu marido sabiam.</p>
+<p>Mas há sete dias, no pátio, Sir Rowan olhou para mim, sorriu e perguntou se eu não estava 'mais corada do que de costume'. Na hora achei que era só gentileza."</p>` },
+
+  perguntas: [
+    { id:"quem", t:"Quem envenenou o cálice?", certa:"rowan", ops:[
+      ["rowan","Sir Rowan, o sobrinho"],["gavron","Sir Gavron, o capitão"],["isolena","A Duquesa Isolena"],
+      ["ilsa","Mestra Ilsa, a herbolária"],["tobin","Tobin, o copeiro"],["duque","O próprio Duque Aldric"] ]},
+    { id:"alvo", t:"Quem o envenenador queria matar?", certa:"duque", ops:[
+      ["bertram","O senescal Bertram"],["duque","O Duque Aldric"],
+      ["duquesa","A Duquesa Isolena"],["qualquer","Qualquer um da mesa alta"] ]},
+    { id:"errado", t:"Por que quem morreu foi o senescal?", certa:"troca", ops:[
+      ["troca","Depois da briga da tarde, o duque cancelou a Troca dos Cálices, e Bertram bebeu do próprio cálice"],
+      ["copeiro","O copeiro trocou os cálices de lugar sem querer"],
+      ["prata","O veneno foi posto no cálice do duque, mas a prata-lunar escureceu e o duque o passou ao senescal"],
+      ["jarro","O veneno estava no jarro, mas só o senescal bebeu antes de todos"] ]},
+    { id:"porque", t:"Qual era o motivo?", certa:"heranca", ops:[
+      ["heranca","Herdar o ducado antes que nascesse o filho da duquesa"],
+      ["soldo","Calar quem ia denunciar o roubo do soldo da guarda"],
+      ["ciume","Ciúme do lugar de honra do senescal à direita do duque"],
+      ["vinganca","Vingar uma humilhação sofrida no banquete do ano anterior"] ]}
+  ],
+
+  solucao: `<p><b>Sir Rowan envenenou o cálice, e o alvo era o duque.</b></p>
+<p>Rowan foi criado em Corvalta e conhecia a Troca dos Cálices: no brinde do Solstício, o duque bebe do cálice de estanho do senescal. Veneno na prata-lunar seria descoberto na hora, mas o estanho não denuncia nada. Então o plano era envenenar o cálice do servo para matar o senhor.</p>
+<p>Por que agora? A duquesa está grávida, e Rowan desconfiou disso sete dias antes. Pelo Foral de Brumaval, o filho que nasce depois da morte do senhor não herda. Se o duque morresse antes do parto, o ducado seria de Rowan. Naquele mesmo dia, ele esteve na botica de Mestra Ilsa e levou o pote de cinzalume.</p>
+<p>No Solstício, Rowan entrou pelo portão ao meio-dia, de capa verde (e não ao anoitecer, como disse). Às três, Marta o viu curvado sobre os cálices. Mas às quatro o duque brigou com Bertram por causa de Gavron e cancelou a Troca: <i>"este ano não bebo do teu cálice"</i>. No brinde, cada um bebeu do seu, e o veneno preparado para o duque matou o senescal.</p>`,
+  cadaUm: [
+    ["Sir Gavron", "Roubou mesmo o soldo e mentiu sobre isso, mas não envenenou ninguém: passou a tarde no portão, e o veneno já estava no cálice antes da briga que o deixou com raiva do senescal."],
+    ["Duquesa Isolena", "Era o seu primeiro Solstício e ela não conhecia a Troca. Além disso, a morte do duque antes do parto tiraria a herança do próprio filho."],
+    ["Mestra Ilsa", "O veneno era dela, mas passou o dia na aldeia e só voltou às cinco."],
+    ["Tobin", "Novo na casa, não sabia da Troca. Foi o depoimento dele que guardou a frase do duque."],
+    ["Irmão Caedmon", "Não fez nada, mas foi ele quem explicou o costume que desmonta o caso."]
+  ],
+  linha: [
+    ["7 dias", "Rowan na botica de Ilsa: o pote de cinzalume some. No pátio, ele insinua que a duquesa está grávida."],
+    ["12h00", "Rowan entra pelo portão, de capa verde. Tobin arruma a mesa alta e sai."],
+    ["15h00", "Marta vê o homem de capa verde curvado sobre os cálices."],
+    ["16h00", "Briga no solar: o duque cancela a Troca dos Cálices."],
+    ["17h00", "Ilsa volta da aldeia."],
+    ["18h00", "Chegam os convidados de Vale Fundo; Rowan se mistura a eles."],
+    ["20h00", "O brinde: \"Este ano não há troca.\" Bertram bebe do próprio cálice e morre."]
+  ]
+};
+</script>
+<script src="motor.js"></script>
+</body>
+</html>
